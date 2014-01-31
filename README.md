@@ -52,7 +52,7 @@ DemoViewController.m
 
 @implementation DemoViewController
 
-#pragma mark - UIViewController life cycle
+// UIViewController life cycle
 
 - (void)loadView
 {
@@ -84,7 +84,7 @@ DemoViewController.m
     [sbIntance startServicesForTarget:self];
 }
 
-#pragma mark - SBLocationManagerDelegate
+// SBLocationManagerDelegate
 
 // This method is called when the user exit the listened region.
 // It is not immediate, we can wait over 10 seconds before call.
