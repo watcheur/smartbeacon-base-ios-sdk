@@ -4,14 +4,12 @@ SmartBeacon Base iOS SDK for iOS 7
 Introduction
 --------------------
 
-SmartBeacon-SDK allows to use Apple iBeacon technology. You can see whole possibilities with our dedicated iPhone application (coming soon!).
-Quickly, iBeacon technology lets you notify user when he is next to beacon (bluetooth chipset).
-
+SmartBeacon’s SDK simplifies the use of Apple’s iBeacon technology with SmartBeacon’s hardware. In only few steps, you will be able to communicate with our beacons and send notifications.
 
 Installation
 --------------------
 
-Follow steps described below to install SmartBeaconSDK library:
+Follow steps described below to install SmartBeacon-SDK library:
 
 1. Download SmartBeacon-SDK.framework and copy it into your project directory.
 
@@ -20,15 +18,15 @@ Follow steps described below to install SmartBeaconSDK library:
   SmartBeacon-SDK requires following native iOS framework: 
   * CoreLocation.framework
 
-3. Congrats! Yes you did it!
+3. That's about it ;)
 
 
 Integration
 --------------------
 
-Follow few steps for simple and fast SmartBeacon-SDK use:
-For the below example we want to notify user when he will exit the region determined by SmartBeacon private proximity UUID.
-The following code shows implementation in a basic View Controller named DemoViewController.
+In few steps, you can integrate our SDK, quick and easy.
+
+In the following example, we want to notify the user when he gets out of the range defined by SmartBeacon private proximity UUID. The following code shows implementation in a basic View Controller named DemoViewController.
 
 DemoViewController.h
 
