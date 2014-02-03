@@ -65,23 +65,40 @@ DemoViewController.m
 	    // getting shared instance
 	    SBInstanceSingleton *sbInstance = [SBInstanceSingleton sharedInstance];
     
-	    // add entire SmartBeacon region 
-	    [sbInstance addEntireBeaconRegionWithIdentifier:@"my_identifier"];
-    
-	    // or specifically one or more SmartBeacon region by specifying major and minor id (minor is optional)
-	    // [sbInstance addBeaconRegionWithMajor:1234 withIdentifier:@"my_identifier_1234"];
-	    // [sbInstance addBeaconRegionWithMajor:5678 withMinor:9012 withIdentifier:@"my_identifier_xyz"];
-    
-	    // note:
-	    // - identifiers must be unique for each beacon region
-	    // - use addEntireBeaconRegionWithIdentifier: once
-	    // or addBeaconRegionWithMajor:withIdentifier:, addBeaconRegionWithMajor:withMinor:withIdentifier as many times as you need it
+	    // add entire SmartBeacon region
+	    // identifier is a value that you specify and can use to identify this region inside your application
+	    [sbInstance addEntireBeaconRegionWithIdentifier:@"custom_identifier"];
     
 	    // start listening beacon region
 	    [sbIntance startServicesForTarget:self];
 	}
 
 	// SBLocationManagerDelegate
+	
+	//
+	// This method is called when the user enter in the listened region.
+	// Called if the user is not already inside the region.
+	//
+	- (void)beaconManager:(SBLocationManager *)manager didEnterRegion:(CLRegion *)region
+	{
+	    // Local notifications are visible only if the app is in background (and if the user allowed them).
+	    //
+	    // That's why, in this case, we open an UIAlertView popup if app is visible and a local notification if is in background.
+
+	    if (UIApplicationStateActive == [[UIApplication sharedApplication] applicationState])
+	    {
+	        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"SmartBeaconSDK" message:@"Hello, how are you?" delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil];
+	        [alertView show];
+	    }
+	    else if (UIApplicationStateBackground == [[UIApplication sharedApplication] applicationState])
+	    {
+	        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+	        [localNotification setSoundName:UILocalNotificationDefaultSoundName];
+	        [localNotification setAlertBody:@"SmartBeaconSDK - Hello, how are you?"];
+        
+	        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+	    }
+	}
 
 	// This method is called when the user exit the listened region.
 	// It is not immediate, we can wait over 10 seconds before call.
@@ -103,6 +120,17 @@ DemoViewController.m
 	        [localNotification setAlertBody:@"SmartBeaconSDK - Bye, see you next time !"];
         
 	        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+	    }
+	}
+	
+	- (void)beaconManager:(SBLocationManager *)manager didDiscoverBeacons:(NSArray *)beacons inRegion:(CLRegion *)region
+	{
+	    NSLog(@"example app discover %d beacons!", [beacons count]);
+
+	    if ([beacons count])
+	    {
+	     	CLBeacon *nearestBeacon = [beacons firstObject];
+	    	NSLog(@"Nearest beacon ID: %@ / %@ / %@", [nearestBeacon proximityUUID], [nearestBeacon major], [nearestBeacon minor]);
 	    }
 	}
 
